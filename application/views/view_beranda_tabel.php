@@ -6,10 +6,12 @@
       <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/materialize.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/custom_beranda.css">
+      <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/lightbox.css">
       <!-- Compiled and minified JavaScript -->
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
       <script src="<?php echo base_url();?>assets/js/materialize.js"></script>
+      <script src="<?php echo base_url();?>assets/js/jquery.tablesorter.js"></script> 
       <!-- For load material icon -->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Let browser know website is optimized for mobile-->
@@ -24,6 +26,13 @@
         // Hide sideNav
         $('.button-collapse').sideNav();
           });
+      </script>
+      <script type="text/javascript">
+   $(document).ready(function() 
+    { 
+        $("#myTable").tablesorter( {dateFormat: 'pt'} ); 
+    } 
+); 
       </script>
     </head>
     <body>
@@ -59,8 +68,25 @@
             </ul>
         </div>
       </nav>  
-      <!-- Gambar IVA Test -->
-      
+
+<!-- Tabel Gambar IVA Test -->
+<div class="container">
+<table id="myTable" class="tablesorter striped">
+<thead>
+          <tr>
+              <th data-field="id">Tanggal pemeriksaan</th>
+              <th data-field="name">Nama Pasien</th>
+              <th data-field="puskesmas">Puskesmas</th>
+              <th data-field="kabupaten">Kabupaten</th>
+              <th data-field="provinsi">Provinsi</th>
+              <th data-field="hasil_ssk">Hasil SSK</th>
+              <th data-field="hasil_iva">Hasil IVA</th>
+              <th data-field="note">Note</th>
+              <th data-field="gambar">View SSK</th>
+              <th data-field="gambar">View IVA</th>
+          </tr>
+</thead>
+        <tbody>
 <?php 
     if (is_array($beranda)){
       foreach ($beranda as $key ) {
@@ -76,33 +102,29 @@
         $time = $key->time;
         $tanggal = date_create($time)
 ?>
-      <div class="row">
-      <div class="col s12 m4 l4 offset-l4">
-        <div class="card-panel teal small">
-        <table>
-        <tr>
-          <td><img src="<?php echo $filename ?>" width="100" height="100">
-          <img src="<?php echo $filename_2 ?>" width="100" height="100"></td>
-          <td><span class="white-text">
-            Tanggal : <?php echo date_format($tanggal, "D, d-M-Y H:i:s") ?> <br>
-            Nama Pasien : <?php echo $nama ?> <br>
-            Provinsi : <?php echo $provinsi ?> <br>
-            Kabupaten : <?php echo $kabupaten ?> <br>
-            Puskesmas Kecamatan : <?php echo $kecamatan ?> <br>
-            Hasil SSK Test : <?php echo $status ?> <br>
-            Hasil IVA Test : <?php echo $status_iva ?> <br>
-            Note : <?php echo $note ?> <br>
-          </span></td>
-        </tr>
-        </table>
-        </div>
-      </div>
-      </div>
+         <tr>
+           <td><?php echo date_format($tanggal, "d/M/y h:m:s") ?></td>
+           <td><?php echo $nama ?></td>
+           <td><?php echo $kecamatan ?></td>
+           <td><?php echo $kabupaten ?></td>
+           <td><?php echo $provinsi ?></td>
+           <td><?php echo $status ?></td>
+           <td><?php echo $status_iva ?></td>
+           <td><?php echo $note ?></td>
+           <td>
+            <a href="<?php echo $filename ?>" data-lightbox="hasil_ssk" data-title="<?php echo $nama ?> | <?php echo date_format($tanggal, "d/M/y h:m:s") ?> | Kecamatan: <?php echo $kecamatan; ?> | Hasil SSK: <?php echo $status ?>"><img class="example-image" src="<?php echo $filename;?>" width="100" height="100"></a>
+           </td>
+            <td>
+            <a href="<?php echo $filename_2 ?>" data-lightbox="hasil_iva" data-title="<?php echo $nama ?> | <?php echo date_format($tanggal, "d/M/y h:m:s") ?> | Kecamatan: <?php echo $kecamatan; ?> | Hasil IVA: <?php echo $status ?>"><img class="example-image" src="<?php echo $filename_2;?>" width="100" height="100"></a>
+           </td>
+         </tr>
 <?php
-    }
+  }
 }
-?> 
-    
+?>
+        </tbody>
+      </table>
+</div>
       <!-- Floating Action Button -->
       <div class="row">
           <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -111,5 +133,16 @@
             </a>
         </div>
       </div>
+<script src="<?php echo base_url();?>assets/js/lightbox.js"></script> 
+ <script type="text/javascript">
+        lightbox.option({
+      'resizeDuration': 150,
+      'wrapAround': true,
+      'positionFromTop' : 200,
+      'fitImagesInViewport' : true,
+      'disableScrolling' : true
+
+    })
+      </script>
     </body>
   </html>

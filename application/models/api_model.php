@@ -18,6 +18,7 @@ class Api_model extends CI_Model {
             'kabupaten'=>$data['kabupaten'],
             'kecamatan'=>$data['kecamatan'],
             'status'=>$data['status'],
+            'iva_ori'=>$data['iva_ori'],
             'status_iva'=>$data['status_iva'],
             'note'=>$data['note']
 			);
